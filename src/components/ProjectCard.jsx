@@ -13,6 +13,13 @@ export default function ProjectCard({ project }) {
           <li key={tech}>{tech}</li>
         ))}
       </ul>
+      {project.media?.length > 0 && (
+        <p className="card-media">
+          {project.media.some((m) => m.type === "video")
+            ? "Includes a demo video"
+            : "Includes result figures"}
+        </p>
+      )}
     </article>
   );
 }

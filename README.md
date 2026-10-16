@@ -25,6 +25,7 @@ src/
   components/
     Layout.jsx             header, NavLink navigation, Outlet, skip button
     ProjectCard.jsx        one project card (props)
+    ProjectMedia.jsx       image or video with caption and alt text
     ExperienceCard.jsx     one experience entry (props)
   pages/
     BasicPages.jsx         Home, Experience, Contact, NotFound
@@ -74,6 +75,13 @@ Tested: copying this URL into a new tab shows the same results, and Back/Forward
 | Skip to content button works | |
 | Mobile width (390px): no horizontal scroll | |
 | Live site in a private window: no 404 for assets | |
+
+## Media
+
+Project images and the MCI demo video come from my own GitHub repositories
+(HPC-CARLA, mci-chatbot-showcase, fl-simulation, dental-ml-force-prediction).
+Images were resized and the video was re-encoded with FFmpeg to keep the site small.
+The demo uses a test participant, not real patient data.
 
 ## Credits
 

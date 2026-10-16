@@ -1,3 +1,10 @@
+import carlaArchitecture from "../assets/projects/carla-architecture.png";
+import mciDemo from "../assets/projects/mci-demo.mp4";
+import mciDemoPoster from "../assets/projects/mci-demo-poster.jpg";
+import flAmdahl from "../assets/projects/fl-amdahl.png";
+import dentalGpr from "../assets/projects/dental-gpr.png";
+import dentalLstm from "../assets/projects/dental-lstm.png";
+
 export const projects = [
   {
     slug: "hpc-carla",
@@ -15,6 +22,14 @@ export const projects = [
     outcome:
       "The framework evaluated six agents over 13,059 routes. 94% of collected results came from jobs that would otherwise have been lost after a failure. The paper was accepted at WORKS 2026 (SC26 workshop).",
     link: "https://github.com/back99/HPC-CARLA",
+    media: [
+      {
+        type: "image",
+        src: carlaArchitecture,
+        alt: "Architecture diagram. SLURM allocates 2 nodes with 8 GPUs each. On each node a coordinator starts one worker per GPU; each worker drives an agent pipeline connected to a persistent CARLA server in Apptainer that restarts on crash. Both nodes claim jobs and write results through a shared filesystem with a lock, and per-route checkpoints let a harvester recover results from failed jobs.",
+        caption: "System architecture: per-GPU persistent CARLA servers, a shared job queue across two nodes, and per-route checkpoints.",
+      },
+    ],
   },
   {
     slug: "mci-companion",
@@ -32,6 +47,16 @@ export const projects = [
     outcome:
       "A deployed working prototype with 690+ automated tests. Lesson: in a clinical setting, safety rules belong in code that runs before the model, not only in the prompt. The code is private because of clinical constraints; an architecture overview is public.",
     link: "https://github.com/back99/mci-chatbot-showcase",
+    linkLabel: "Architecture overview on GitHub (code is private)",
+    media: [
+      {
+        type: "video",
+        src: mciDemo,
+        poster: mciDemoPoster,
+        alt: "Demo video of the iPad app: the AI greets a test participant first, then the user and AI take voice turns while the screen shows Listening and Companion is speaking, then the session closes.",
+        caption: "Demo with a test participant (2:44): AI-initiated greeting, hands-free voice turns, and session close.",
+      },
+    ],
   },
   {
     slug: "watermark-token-issuance",
@@ -80,6 +105,14 @@ export const projects = [
     outcome:
       "About 1.27x stable speedup with 8 workers. Amdahl analysis showed only about 24% of a round is parallel, which explains the plateau. More workers than cores added nothing. Next step: multi-node FL on the SLU Libra cluster and asynchronous FedAvg (FedAsync).",
     link: "https://github.com/back99/fl-simulation",
+    media: [
+      {
+        type: "image",
+        src: flAmdahl,
+        alt: "Three charts for 50, 100, and 200 clients comparing actual speedup to the Amdahl's law curve. Actual speedup is below 1.0 with 2 workers, rises to about 1.27 at 8 workers, and stays flat or drops at 16 workers, matching the Amdahl curve with a parallel fraction near 0.24.",
+        caption: "Measured speedup vs. Amdahl's law (parallel fraction about 0.24) for 50, 100, and 200 clients.",
+      },
+    ],
   },
   {
     slug: "dental-force-prediction",
@@ -97,5 +130,19 @@ export const projects = [
     outcome:
       "Across 60 experiments, Fx MAE was about 0.08 N. Cutting the observation period from 14 days to 5 days barely changed the error, which supports a shorter measurement period. Lesson: tree models like XGBoost cannot predict outside the training range, so GPR was the right tool here.",
     link: "https://github.com/back99/dental-ml-force-prediction",
+    media: [
+      {
+        type: "image",
+        src: dentalLstm,
+        alt: "Six charts, one per force and moment component. Gray lines show measured values for the first 5 days of one cohort; dashed colored lines show LSTM predictions for day 6, day 7, and day 14 next to the hidden actual values. Fx MAE is 0.0958 N in this run.",
+        caption: "LSTM forecast for an unseen cohort: train on the first 5 days, predict days 6, 7, and 14.",
+      },
+      {
+        type: "image",
+        src: dentalGpr,
+        alt: "Six charts of forces and moments over time. Solid lines are measured data at 0.25 mm and 0.5 mm; dashed and dotted lines are GPR predictions at 1.0 mm and 1.25 mm for several simulation weights, which stay separate from each other but flat over time.",
+        caption: "GPR predictions at 1.0 mm and 1.25 mm, thicknesses not in the training data.",
+      },
+    ],
   },
 ];

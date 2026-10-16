@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { projects } from "../data/projects.js";
+import ProjectMedia from "../components/ProjectMedia.jsx";
 
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -28,9 +29,17 @@ export default function ProjectDetail() {
       <p>{project.approach}</p>
       <h2>Result or lesson</h2>
       <p>{project.outcome}</p>
+      {project.media?.length > 0 && (
+        <>
+          <h2>{project.media.some((m) => m.type === "video") ? "Demo" : "Figures"}</h2>
+          {project.media.map((item) => (
+            <ProjectMedia key={item.src} item={item} />
+          ))}
+        </>
+      )}
       {project.link && (
         <p>
-          <a href={project.link}>Source code</a>
+          <a href={project.link}>{project.linkLabel ?? "Repository on GitHub"}</a>
         </p>
       )}
       <Link to="/projects">Back to projects</Link>
