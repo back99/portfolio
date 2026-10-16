@@ -55,26 +55,30 @@ Tested: copying this URL into a new tab shows the same results, and Back/Forward
 
 ## Verification checklist
 
+Tested on the live site (https://back99.github.io/portfolio/) in Chrome on October 16, 2026.
+
 | Check | Result |
 | --- | --- |
-| `npm run lint` passes | |
-| `npm run build` passes | |
-| Home, Experience, Projects, Contact load from the nav | |
-| Active nav link is bold and underlined | |
-| Project card opens its detail page | |
-| Refresh on a detail page works on the live site | |
-| `#/no-such-page` shows Page not found | |
-| `#/projects/no-such-project` shows Project not found | |
-| Filter: mixed case (`ReDiS`) works | |
-| Filter: surrounding spaces are ignored | |
-| Filter: no match shows a message | |
-| Filter: empty filter shows all projects | |
-| Filter URL copied to a new tab keeps results | |
-| Back/Forward updates the applied filter | |
-| Keyboard Tab shows a visible focus outline | |
-| Skip to content button works | |
-| Mobile width (390px): no horizontal scroll | |
-| Live site in a private window: no 404 for assets | |
+| `npm run lint` passes | Pass (also runs in GitHub Actions) |
+| `npm run build` passes | Pass (also runs in GitHub Actions) |
+| Home, Experience, Projects, Contact load from the nav | Pass |
+| Active nav link is highlighted | Pass ("Projects" is active on a project detail page) |
+| Project card opens its detail page | Pass |
+| Refresh on a detail page works on the live site | Pass (`#/projects/eks-distributed-encoding` reloads with images) |
+| `#/no-such-page` shows Page not found | Pass ("404: Page not found") |
+| `#/projects/no-such-project` shows Project not found | Pass |
+| Typing in the filter does not apply it until Apply/Enter | Pass (status stays "No filter applied") |
+| Filter: mixed case and surrounding spaces (`  ReDiS  `) | Pass (trimmed to `?q=ReDiS`, 2 projects) |
+| Filter: no match shows a message | Pass (`?q=zzz`, "No projects match") |
+| Filter: Clear removes `?q=` and shows all projects | Pass (6 projects) |
+| Filter URL opened in a new tab keeps results | Pass (`#/projects?q=ReDiS`, 2 projects) |
+| Back/Forward updates the applied filter | Pass (zzz -> ReDiS -> zzz) |
+| Keyboard Tab shows a visible focus outline | Pass (3px solid outline) |
+| Skip to content button works | Pass (focus moves to main) |
+| GitHub links open in a new tab | Pass (`target="_blank"`, `rel="noopener noreferrer"`) |
+| Mobile width (390px): no horizontal scroll | Pass |
+| Demo video plays on the live site | Pass |
+| Live site: JS, CSS, and fonts load with no 404 | Pass (all assets 200) |
 
 ## Media
 
