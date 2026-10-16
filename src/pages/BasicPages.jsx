@@ -117,11 +117,11 @@ export function Contact() {
       <p>The best way to learn more about my work:</p>
       <ul className="contact-list">
         <li>
-          GitHub: <a href="https://github.com/back99">github.com/back99</a>
+          GitHub: <a href="https://github.com/back99" target="_blank" rel="noopener noreferrer">github.com/back99</a>
         </li>
         <li>
           LinkedIn:{" "}
-          <a href="https://www.linkedin.com/in/seungbum-jung-6a105317a/">
+          <a href="https://www.linkedin.com/in/seungbum-jung-6a105317a/" target="_blank" rel="noopener noreferrer">
             linkedin.com/in/seungbum-jung-6a105317a
           </a>
         </li>

@@ -368,6 +368,14 @@ input {
 .site-footer p { padding-top: 1.25rem; padding-bottom: 1.25rem; margin: 0 auto; }
 
 /* ---------- a11y ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 img { max-width: 100%; height: auto; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .skip-link { position: absolute; left: -10000px; z-index: 20; }

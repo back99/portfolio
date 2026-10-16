@@ -57,8 +57,14 @@ export default function ProjectDetail() {
 
       <p className="detail-links">
         {project.link && (
-          <a className="button-link" href={project.link}>
-            {project.linkLabel ?? "Repository on GitHub"}
+          <a
+            className="button-link"
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {project.linkLabel ?? "View on GitHub"}
+            <span className="visually-hidden"> (opens in a new tab)</span>
           </a>
         )}
         <Link className="button-link ghost" to="/projects">Back to projects</Link>

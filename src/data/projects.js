@@ -51,7 +51,7 @@ export const projects = [
     outcome:
       "A deployed working prototype with 690+ automated tests. Lesson: in a clinical setting, safety rules belong in code that runs before the model, not only in the prompt. The code is private because of clinical constraints; an architecture overview is public.",
     link: "https://github.com/back99/mci-chatbot-showcase",
-    linkLabel: "Architecture overview on GitHub (code is private)",
+    linkLabel: "View on GitHub (code is private)",
     media: [
       {
         type: "video",
@@ -78,7 +78,6 @@ export const projects = [
     outcome:
       "Issuance latency dropped by 30%, and the system issued 5M+ tokens across Seoul and Oregon, later Frankfurt, with no duplicate tokens and no database check on the issuance path.",
     link: "https://github.com/back99/back99/tree/main/Watermark_session_token_ver2",
-    linkLabel: "Design write-up on GitHub",
     media: [
       {
         type: "image",
@@ -110,7 +109,6 @@ export const projects = [
     outcome:
       "Encoding cost fell by 50% compared to Hybrik and throughput rose by 30%. The number of jobs now scales with video length and load.",
     link: "https://github.com/back99/back99/tree/main/Distributed_transcoding",
-    linkLabel: "Design write-up on GitHub",
     media: [
       {
         type: "image",
