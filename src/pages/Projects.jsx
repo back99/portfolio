@@ -44,13 +44,13 @@ export default function Projects() {
           />
           <button type="submit">Apply</button>
           {applied && (
-            <button type="button" onClick={handleClear}>
+            <button type="button" className="ghost" onClick={handleClear}>
               Clear
             </button>
           )}
         </div>
       </form>
-      <p role="status">
+      <p className="status-line" role="status">
         {applied ? `Applied filter: "${applied}". ` : "No filter applied. "}
         {visible.length} project(s) found.
       </p>
@@ -61,7 +61,7 @@ export default function Projects() {
           ))}
         </div>
       ) : (
-        <p>No projects match. Try another search.</p>
+        <p className="notice" style={{ padding: "1rem" }}>No projects match. Try another search.</p>
       )}
     </section>
   );

@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 
 export default function Layout() {
   return (
@@ -12,19 +12,24 @@ export default function Layout() {
         Skip to content
       </button>
       <header className="site-header">
-        <p className="brand">Seung Bum Jung</p>
-        <nav aria-label="Main navigation">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/experience">Experience</NavLink>
-          <NavLink to="/projects">Projects</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
-        </nav>
+        <div className="header-inner">
+          <Link to="/" className="brand" aria-label="Seung Bum Jung, home">
+            <span className="brand-mark" aria-hidden="true">SB</span>
+            <span className="brand-name">Seung Bum Jung</span>
+          </Link>
+          <nav aria-label="Main navigation">
+            <NavLink to="/" end>Home</NavLink>
+            <NavLink to="/experience">Experience</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
+          </nav>
+        </div>
       </header>
       <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
       <footer className="site-footer">
-        Built with React, Vite, and React Router. Deployed on GitHub Pages.
+        <p>Built with React, Vite, and React Router. Deployed on GitHub Pages.</p>
       </footer>
     </>
   );
