@@ -89,5 +89,7 @@ The demo uses a test participant, not real patient data.
 
 ## Credits
 
-Route, filter, and deployment structure follow the course handout (CSCI 4360/5360, Prof. Flavio Esposito).
-Generative AI use follows the course policy.
+- Route, filter, and deployment structure follow the course handout (CSCI 4360/5360, Prof. Flavio Esposito).
+- Fonts (SIL Open Font License, bundled with @fontsource): Press Start 2P (CodeMan38), Silkscreen (Jason Kottke), IBM Plex Mono (IBM).
+- Project images and the demo video are from my own GitHub repositories (see Media).
+- AI use: I used Claude (Anthropic), an AI coding assistant, for much of the code, CSS, and README text. I chose the content, style, projects, and images, reviewed the output, and requested changes. This follows the course generative-AI policy.
