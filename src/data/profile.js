@@ -30,15 +30,15 @@ export const experiences = [
     org: "Saint Louis University, HPC Lab",
     dates: "Jan 2026 to Present",
     points: [
-      "Built watchdog-based failure recovery and automatic SLURM resubmission for HPC-CARLA; 94% of collected results came from jobs that would otherwise have been lost.",
-      "Built MCI Companion, a voice-first LLM system with a code-level safety layer that checks every message before the model runs.",
+      "Co-developed HPC-CARLA (paper accepted at WORKS 2026, SC26 workshop). Built watchdog-based failure recovery and automatic SLURM resubmission for HPC-CARLA; 94% of collected results came from jobs that would otherwise have been lost.",
+      "Built MCI Companion alone, end to end: a voice-first clinical LLM chatbot with server-side crisis detection and 690+ automated tests.",
     ],
   },
   {
     id: "doverunner",
     role: "Software Engineer",
     org: "DoveRunner, Seoul",
-    dates: "Apr 2023 to Aug 2025",
+    dates: "Apr 2023 to Sep 2025",
     points: [
       "Redesigned watermark token issuance with Lambda, Redis, and SNS: 30% lower latency, 5M+ tokens across three regions.",
       "Replaced Hybrik with a GOP-split encoding pipeline on EKS: 50% lower cost, 30% higher throughput.",

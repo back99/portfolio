@@ -78,6 +78,9 @@ export function Contact() {
             linkedin.com/in/seungbum-jung-6a105317a
           </a>
         </li>
+        <li>
+          Email: <a href="mailto:seungbum.jung@slu.edu">seungbum.jung@slu.edu</a>
+        </li>
       </ul>
     </section>
   );
