@@ -1,6 +1,6 @@
 export default function ProjectMedia({ item }) {
   return (
-    <figure className="media">
+    <figure className={item.tall ? "media media-tall" : "media"}>
       {item.type === "video" ? (
         <video
           controls

@@ -4,6 +4,10 @@ import mciDemoPoster from "../assets/projects/mci-demo-poster.jpg";
 import flAmdahl from "../assets/projects/fl-amdahl.png";
 import dentalGpr from "../assets/projects/dental-gpr.png";
 import dentalLstm from "../assets/projects/dental-lstm.png";
+import wmIssuanceFlow from "../assets/projects/wm-issuance-flow.png";
+import wmRefillFlow from "../assets/projects/wm-refill-flow.png";
+import eksArchitecture from "../assets/projects/eks-architecture.png";
+import eksWorkerFlow from "../assets/projects/eks-worker-flow.png";
 
 export const projects = [
   {
@@ -62,33 +66,66 @@ export const projects = [
     slug: "watermark-token-issuance",
     title: "Watermark Token Issuance",
     category: "Cloud Backend",
-    technologies: ["Kotlin", "AWS Lambda", "Redis", "SNS", "SQS", "CloudWatch"],
+    technologies: ["Kotlin", "AWS Lambda", "Redis", "SQS", "SNS", "CloudWatch", "RDB"],
     summary:
       "Replaced a synchronous database-based token issuer with a serverless, event-driven design at DoveRunner.",
     problem:
-      "Forensic watermark tokens were issued through a synchronous RDB-based flow with separate indexes per region. Latency rose under peak load.",
+      "Forensic watermark tokens were issued through a synchronous RDB-based flow. Under many concurrent requests, TPS hit the RDB limit, and duplicate checks and locks added latency. Regional indexes were also managed separately.",
     role:
       "Software Engineer at DoveRunner. I designed the new issuance system and the move to one global index.",
     approach:
-      "AWS Lambda and Redis serve tokens from a non-linear index generator, with one global WM_INDEX instead of regional indexes. SNS and CloudWatch trigger regeneration, and SQS handles persistence asynchronously.",
+      "Tokens are generated ahead of time and kept in a Redis queue, so a request gets a token right away without touching the database. The issued-token record goes to SQS, and Lambda writes it to the RDB asynchronously. When Redis memory falls below 200MB, a CloudWatch alarm publishes to SNS, and one Lambda generates new tokens and refills the queue. Tokens come from a skew transform of a sequential index (one global WM_INDEX), so each index maps to a unique token without a database uniqueness check.",
     outcome:
-      "Issuance latency dropped by 30%, and the system provisioned 5M+ tokens across Seoul and Oregon, later Frankfurt.",
+      "Issuance latency dropped by 30%, and the system issued 5M+ tokens across Seoul and Oregon, later Frankfurt, with no duplicate tokens and no database check on the issuance path.",
+    link: "https://github.com/back99/back99/tree/main/Watermark_session_token_ver2",
+    linkLabel: "Design write-up on GitHub",
+    media: [
+      {
+        type: "image",
+        src: wmIssuanceFlow,
+        alt: "Issuance flow diagram, labeled in Korean. 1: the client requests a token. 2: Redis returns a pre-generated token from its queue. 3: the client sends the token info to Amazon SQS. 4: SQS triggers Lambda. 5: Lambda saves the token info to the database.",
+        caption: "Issuance path: Redis answers instantly; SQS and Lambda save the record in the background. (Diagram labels in Korean.)",
+      },
+      {
+        type: "image",
+        src: wmRefillFlow,
+        alt: "Refill flow diagram, labeled in Korean. Oregon and Seoul Redis each hold a queue. When a queue drops below 200MB, a CloudWatch alarm calls a regional SNS topic, which invokes the Seoul Lambda. Lambda reads the last queued index and the region index from the database, generates new tokens, saves them with the index to Redis, and stores the increased index in the database.",
+        caption: "Refill path: a 200MB memory alarm triggers SNS and Lambda to generate and store new tokens for Seoul and Oregon. (Diagram labels in Korean.)",
+      },
+    ],
   },
   {
     slug: "eks-distributed-encoding",
     title: "Distributed Encoding on EKS",
     category: "Video Infrastructure",
-    technologies: ["Kubernetes", "AWS EKS", "FFmpeg", "Redis", "Docker"],
+    technologies: ["AWS EKS", "Kubernetes", "Karpenter", "FFmpeg", "Redis", "Argo Workflows", "S3", "EFS"],
     summary:
-      "Replaced a third-party encoding service with a containerized pipeline that splits video by GOP.",
+      "Replaced a third-party encoding service with a self-hosted EKS pipeline that splits video by GOP and transcodes segments in parallel.",
     problem:
-      "Encoding with Hybrik was expensive, and long videos were processed as one job, which limited throughput.",
+      "Large videos were transcoded through Hybrik, an external SaaS. It was expensive, did not scale well, and one large file on one server became a bottleneck.",
     role:
-      "Software Engineer at DoveRunner. I owned segmentation, the transcoding workers, and segment merge.",
+      "Software Engineer at DoveRunner. I owned GOP-aware segmentation (the distributor), the transcoding workers, and the merge of transcoded segments.",
     approach:
-      "Videos are split at GOP boundaries so segments can be transcoded in parallel on EKS workers. Redis tracks job state for each segment, and a merge step rebuilds the output. Packaging and media services were made into reusable modules.",
+      "The distributor cuts each video on GOP boundaries, so every segment can be encoded on its own without artifacts at the seams, and pushes segment jobs to Redis. Workers run as EKS Jobs: each one pops a segment with BRPOP, builds a signed input URL and an FFmpeg command (with the forensic watermark filter when needed), transcodes, and loops until the queue is empty. Redis tracks the state of every segment. Karpenter scales nodes with load, and the packager merges the segments and writes the final output to the customer's S3.",
     outcome:
-      "Encoding cost fell by 50% and throughput rose by 30%, with parallel job execution.",
+      "Encoding cost fell by 50% compared to Hybrik and throughput rose by 30%. The number of jobs now scales with video length and load.",
+    link: "https://github.com/back99/back99/tree/main/Distributed_transcoding",
+    linkLabel: "Design write-up on GitHub",
+    media: [
+      {
+        type: "image",
+        src: eksArchitecture,
+        alt: "Architecture diagram. TNP-API with Amazon MSK sends requests to the EKS control plane in one AWS region. Karpenter manages three node groups: node-distribute running the distributor and packager, worker nodes running transcoding workers, and a monitoring node with Argo Workflows, kube-ops-view, and the Redis application. The distributor and workers share an EFS volume, and input and output go through the customer's S3 bucket.",
+        caption: "System architecture on EKS: distributor, workers, and Redis on separate node groups, scaled by Karpenter.",
+      },
+      {
+        type: "image",
+        src: eksWorkerFlow,
+        tall: true,
+        alt: "Worker flowchart. The worker reads job, storage, and content URL info from Redis, then pops segment info with BRPOP. If no segment is left, it ends. For an audio track it creates a signed audio URL, builds an FFmpeg command, and transcodes. For video it checks the content URL, creates a signed video URL if needed, builds an FFmpeg command, adds the forensic watermark filter if FWM is on, transcodes the segment, and loops back to pop the next segment.",
+        caption: "Transcoding worker loop: pop a segment from Redis, build the FFmpeg command, add the watermark filter if needed, repeat.",
+      },
+    ],
   },
   {
     slug: "fl-simulation",
