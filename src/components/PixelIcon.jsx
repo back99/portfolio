@@ -1,5 +1,15 @@
 // 8x8 pixel icons drawn from string maps. "#" = filled pixel.
 const ICONS = {
+  "Market Data": [
+    "........",
+    "......#.",
+    ".....#.#",
+    "..#.#...",
+    ".#.#....",
+    "#.......",
+    "########",
+    "........",
+  ],
   "Distributed Systems": [
     "########",
     "#......#",

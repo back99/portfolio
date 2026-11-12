@@ -8,6 +8,7 @@ import wmIssuanceFlow from "../assets/projects/wm-issuance-flow.png";
 import wmRefillFlow from "../assets/projects/wm-refill-flow.png";
 import eksArchitecture from "../assets/projects/eks-architecture.png";
 import eksWorkerFlow from "../assets/projects/eks-worker-flow.png";
+import coinbotResults from "../assets/projects/coinbot-results.png";
 
 export const projects = [
   {
@@ -177,6 +178,31 @@ export const projects = [
         src: dentalGpr,
         alt: "Six charts of forces and moments over time. Solid lines are measured data at 0.25 mm and 0.5 mm; dashed and dotted lines are GPR predictions at 1.0 mm and 1.25 mm for several simulation weights, which stay separate from each other but flat over time.",
         caption: "GPR predictions at 1.0 mm and 1.25 mm, thicknesses not in the training data.",
+      },
+    ],
+  },
+  {
+    slug: "coin-leadlag-validation",
+    title: "Crypto Lead-Lag Validation",
+    category: "Market Data",
+    technologies: ["Python", "pandas", "NumPy", "Upbit API", "Binance API", "Bithumb API", "Claude"],
+    summary:
+      "Tested a crypto day-trading idea against real market data before building any trading bot, and rejected all 9 strategies.",
+    problem:
+      "I wanted to auto-trade on the idea that altcoins follow Bitcoin or Ethereum with a delay. Before building trading infrastructure, I needed to know whether the signal beats trading costs, and backtests easily produce fake profits when conditions are tuned to past data.",
+    role:
+      "Personal project with an AI assistant (Claude). I set the hypotheses and strategy ideas, ran the scripts on my own machine, reviewed the results, and pointed out flaws in the AI's analysis. The AI wrote the analysis code and documented the results.",
+    approach:
+      "Collected Upbit 5-minute bars for 90 days (25,935 bars), Binance 1-second bars for 2 days (about 170K bars per coin), and Upbit and Bithumb order books through public REST APIs, cached as local CSV files. Every test used a random-entry control group, an in-sample and out-of-sample split, and per-coin round-trip cost (measured spread plus fees). Each tool was first checked on synthetic data with a planted signal. I caught two engine flaws: fixed-time exits recorded a winning trade as a loss (+1.10% recorded as -0.20%), and ignoring each coin pair's beta created fake signals.",
+    outcome:
+      "All 9 strategies were rejected. Altcoins follow Bitcoin almost at the same moment (correlation about 0.01 one minute later), so the signal value (about +0.1%) never beat the round-trip cost (0.115% to 1.022%). Trend following went from +27.7% in-sample to -31.0% out-of-sample, a clear case of overfitting. No real trading was done; the idea was dropped before any money or infrastructure was spent.",
+    link: "https://github.com/back99/coin-leadlag-validation",
+    media: [
+      {
+        type: "image",
+        src: coinbotResults,
+        alt: "Two bar charts. Left: correlation between a Bitcoin move and altcoin moves is 0.48 in the same second, 0.08 one second later, and 0.01 one minute later. Right: measured round-trip cost per trade on Upbit is 0.115% for BTC, 0.135% for ETH, 0.161% for XRP, 0.188% for SOL, 0.459% for XLM, and 1.022% for DOGE, all above a dashed line at the signal value of about 0.1%.",
+        caption: "Why it fails: altcoins follow Bitcoin almost instantly, and the signal value stays below the trading cost for every coin.",
       },
     ],
   },
