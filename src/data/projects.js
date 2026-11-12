@@ -40,17 +40,17 @@ export const projects = [
     slug: "mci-companion",
     title: "MCI Companion",
     category: "Healthcare AI",
-    technologies: ["Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Claude API", "AWS Transcribe", "AWS Polly"],
+    technologies: ["Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Claude API", "Claude Code", "AWS Transcribe", "AWS Polly"],
     summary:
-      "iPad-based, voice-first LLM chatbot for older adults with mild cognitive impairment, built for a HIPAA clinical pilot.",
+      "Research prototype of a voice-first LLM companion for older adults with mild cognitive impairment, designed so safety never depends on the model alone.",
     problem:
-      "Older adults with MCI need a companion that is easy to talk to, and a clinical team needs to trust that crisis messages are never handled only by the LLM.",
+      "A clinical study (pilot work for an NIH R01 proposal) needed a companion older adults with MCI can simply talk to. The clinical team could not let crisis messages be handled only by the LLM, and needed to trust the data.",
     role:
-      "Graduate Research Assistant. I led the development end to end by directing a Claude Code agent team: requirements with the PI, task design, PR review, AWS deployment and operations. The prototype covers device pairing, participant onboarding, AI-initiated conversation, hands-free voice, and a coordinator dashboard with CSV export. It is pilot work for a future NIH R01 grant proposal.",
+      "Graduate Research Assistant. I designed how the LLM is used in the service and led development with a Claude Code multi-agent team (lead, server, frontend, mobile, AI, QA). I owned requirements with the PI, task design, PR review and merge, and AWS infrastructure. Safety logic, session limits, and interface changes required my approval.",
     approach:
-      "A code-level safety layer checks every user message before LLM inference. If it finds a crisis signal, it stops the normal conversation and starts a separate escalation workflow. Voice uses AWS Transcribe and Polly with silence detection, so the user never presses a button. Participants are tracked by de-identified labels, and storage keeps only de-identified metadata, not raw audio or conversation text.",
+      "Every message passes a rule-based crisis check before any LLM call; a crisis signal stops the conversation and starts a lock, safety question, 911/988, and staff-alert flow that only a person can clear, and the AI second pass can only raise the risk level. Prompts are assembled per request from config files (persona, safety rules, participant context, topic bank, wrap-up instruction) so the PI can edit them without code changes, with prompt caching on the fixed part. After each session the LLM extracts topics and clinical-domain flags as research metadata; transcripts and audio are not stored in the database. Voice uses AWS Transcribe and Polly with per-sentence TTS and speculative early STT.",
     outcome:
-      "A working prototype deployed on AWS EC2 (dev and prod) with 1,193 backend test functions and 806 frontend tests, over about five months and 189 commits. The participant pilot is planned after IRB approval. Lesson: in a clinical setting, safety rules belong in code that runs before the model, not only in the prompt. The code is private because of clinical constraints; an architecture overview is public.",
+      "A working research prototype with text and voice conversation, crisis handling, and a staff dashboard, about 1.3 to 1.6 seconds to first audio on dev. The participant pilot is planned after IRB approval. Lesson: in a clinical setting, safety rules belong in code that runs before the model, and AI agents speed up development only when a person owns the decisions that matter.",
     link: "https://github.com/back99/mci-chatbot-showcase",
     linkLabel: "View on GitHub (code is private)",
     media: [

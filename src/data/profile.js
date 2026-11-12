@@ -31,7 +31,7 @@ export const experiences = [
     dates: "Jan 2026 to Present",
     points: [
       "Co-developed HPC-CARLA (paper accepted at WORKS 2026, SC26 workshop). Built watchdog-based failure recovery and automatic SLURM resubmission for HPC-CARLA; 94% of collected results came from jobs that would otherwise have been lost.",
-      "Led MCI Companion end to end by directing a Claude Code agent team: a voice-first clinical LLM chatbot with server-side crisis detection, deployed on AWS EC2, with 1,193 backend test functions and 806 frontend tests.",
+      "Designed MCI Companion, a voice-first clinical LLM chatbot where crisis detection runs before the model, and built it with a Claude Code multi-agent team.",
     ],
   },
   {
