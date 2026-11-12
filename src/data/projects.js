@@ -46,11 +46,11 @@ export const projects = [
     problem:
       "Older adults with MCI need a companion that is easy to talk to, and a clinical team needs to trust that crisis messages are never handled only by the LLM.",
     role:
-      "Graduate Research Assistant. I built the working prototype alone, end to end: device pairing, participant onboarding, AI-initiated conversation, hands-free voice, and a coordinator dashboard with CSV export. It is pilot work for a future NIH R01 grant proposal.",
+      "Graduate Research Assistant. I led the development end to end by directing a Claude Code agent team: requirements with the PI, task design, PR review, AWS deployment and operations. The prototype covers device pairing, participant onboarding, AI-initiated conversation, hands-free voice, and a coordinator dashboard with CSV export. It is pilot work for a future NIH R01 grant proposal.",
     approach:
       "A code-level safety layer checks every user message before LLM inference. If it finds a crisis signal, it stops the normal conversation and starts a separate escalation workflow. Voice uses AWS Transcribe and Polly with silence detection, so the user never presses a button. Participants are tracked by de-identified labels, and storage keeps only de-identified metadata, not raw audio or conversation text.",
     outcome:
-      "A deployed working prototype with 690+ automated tests. Lesson: in a clinical setting, safety rules belong in code that runs before the model, not only in the prompt. The code is private because of clinical constraints; an architecture overview is public.",
+      "A working prototype deployed on AWS EC2 (dev and prod) with 1,193 backend test functions and 806 frontend tests, over about five months and 189 commits. The participant pilot is planned after IRB approval. Lesson: in a clinical setting, safety rules belong in code that runs before the model, not only in the prompt. The code is private because of clinical constraints; an architecture overview is public.",
     link: "https://github.com/back99/mci-chatbot-showcase",
     linkLabel: "View on GitHub (code is private)",
     media: [
